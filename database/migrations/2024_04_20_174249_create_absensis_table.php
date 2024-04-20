@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('alpha');
             $table->boolean('alasan');
             $table->date('tanggal');
+            $table->string('tahun_ajaran');
             $table->timestamps();
         });
     }

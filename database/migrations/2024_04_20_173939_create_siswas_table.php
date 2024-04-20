@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('kelas_id')->nullable()->references('id')->on('kelas')->nullOnDelete();
+            $table->string('kelas');
             $table->integer('nomor_absensi');
             $table->string('nama_siswa');
-            $table->string('tahun_ajaran');
             $table->timestamps();
         });
     }

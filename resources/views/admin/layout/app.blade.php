@@ -62,25 +62,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{ route('admin.dashboard') }}" class="brand-link">
+            <a href="{{ route('admin.dashboard') }}" class="brand-link text-center">
                 <span class="brand-text font-weight-bold">ADMIN</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        {{-- <img src="{{ asset(auth()->user()->profile?->foto ?? '-') }}"
-                            style="width: 45px; height: 45px; object-fit: cover !important"
-                            class="img-circle elevation-2" alt="User Image"> --}}
-                    </div>
-                    <div class="info">
-                        {{-- <a href="#"
-                            class="d-block font-weight-bold">{{ auth()->user()->username?->nama_lengkap }}</a> --}}
-                    </div>
-                </div>
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -100,6 +87,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>
                                     Kelas
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.siswa') }}"
+                                class="nav-link {{ $active == 'siswa' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    Siswa
                                 </p>
                             </a>
                         </li>

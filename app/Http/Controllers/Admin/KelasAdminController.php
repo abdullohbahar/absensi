@@ -45,7 +45,7 @@ class KelasAdminController extends Controller
         $kelas = Kelas::where('kelas', $namaKelas)->exists();
 
         if ($kelas) {
-            return redirect()->back()->with('error', 'Kelas ' . $namaKelas . ' Sudah Ada. Anda Tidak Dapat Menambah Kelas Yang Sama');
+            return redirect()->back()->with('error', 'Kelas ' . $namaKelas . ' Sudah Ada. Anda Tidak Dapat Menambah Kelas Yang Sama')->withInput();
         }
 
         Kelas::create([

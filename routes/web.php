@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KelasAdminController;
+use App\Http\Controllers\Admin\SiswaAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +29,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/create', [KelasAdminController::class, 'create'])->name('admin.create.kelas');
         Route::post('/store', [KelasAdminController::class, 'store'])->name('admin.store.kelas');
         Route::delete('/destroy/{id}', [KelasAdminController::class, 'destroy'])->name('admin.destroy.kelas');
+    });
+
+    Route::prefix('siswa')->group(function () {
+        Route::get('/', [SiswaAdminController::class, 'index'])->name('admin.siswa');
+        Route::get('/create', [SiswaAdminController::class, 'create'])->name('admin.create.siswa');
+        Route::post('/store', [SiswaAdminController::class, 'store'])->name('admin.store.siswa');
+        Route::get('/edit/{id}', [SiswaAdminController::class, 'edit'])->name('admin.edit.siswa');
+        Route::put('/update/{id}', [SiswaAdminController::class, 'update'])->name('admin.update.siswa');
+        Route::delete('/destroy/{id}', [SiswaAdminController::class, 'destroy'])->name('admin.destroy.siswa');
     });
 });
