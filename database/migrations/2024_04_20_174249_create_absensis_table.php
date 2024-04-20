@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('absensis', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('username');
-            $table->text('password');
-            $table->enum('role', ['admin', 'guru']);
+            $table->foreignUuid('siswa_id')->nullable()->references('id')->on('siswas')->nullOnDelete();
+            $table->boolean('masuk');
+            $table->boolean('ijin');
+            $table->boolean('sakit');
+            $table->boolean('alpha');
+            $table->boolean('alasan');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('absensis');
     }
 };
