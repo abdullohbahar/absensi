@@ -88,9 +88,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="{{ route('admin.dashboard') }}"
                                 class="nav-link {{ $active == 'dashboard' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kelas') }}"
+                                class="nav-link {{ $active == 'kelas' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Kelas
                                 </p>
                             </a>
                         </li>
@@ -164,7 +173,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 5000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)

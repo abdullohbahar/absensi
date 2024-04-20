@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Admin\KelasAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,11 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::prefix('kelas')->group(function () {
+        Route::get('/', [KelasAdminController::class, 'index'])->name('admin.kelas');
+        Route::get('/create', [KelasAdminController::class, 'create'])->name('admin.create.kelas');
+        Route::post('/store', [KelasAdminController::class, 'store'])->name('admin.store.kelas');
+        Route::delete('/destroy/{id}', [KelasAdminController::class, 'destroy'])->name('admin.destroy.kelas');
+    });
 });
