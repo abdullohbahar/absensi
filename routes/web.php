@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KelasAdminController;
 use App\Http\Controllers\Admin\SiswaAdminController;
+use App\Http\Controllers\Guru\ExportController;
 use App\Http\Controllers\Guru\GuruController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GuruController::class, 'index'])->name('guru.index');
 Route::get('presensi/{kelas}', [GuruController::class, 'presensi'])->name('guru.presensi');
 Route::post('absensi/{idSiswa}/{keterangan}', [GuruController::class, 'absensi'])->name('guru.absensi.siswa');
+
+Route::get('export', [ExportController::class, 'index'])->name('guru.index.export');
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');

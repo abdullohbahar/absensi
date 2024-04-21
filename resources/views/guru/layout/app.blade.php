@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('guru.index') }}" class="nav-link">
+                            <a href="{{ route('guru.index.export') }}" class="nav-link">
                                 <b>Export Excel</b>
                             </a>
                         </li>
