@@ -55,7 +55,7 @@ class GuruController extends Controller
                 $absensi->ijin = true;
             } else if ($keterangan == 'sakit') {
                 $absensi->sakit = true;
-            } else if ($keterangan->alpha) {
+            } else if ($keterangan == 'alpha') {
                 $absensi->alpha = true;
             }
 
