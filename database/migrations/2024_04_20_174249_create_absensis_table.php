@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('absensis', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('siswa_id')->nullable()->references('id')->on('siswas')->nullOnDelete();
-            $table->boolean('masuk');
-            $table->boolean('ijin');
-            $table->boolean('sakit');
-            $table->boolean('alpha');
-            $table->boolean('alasan');
-            $table->date('tanggal');
-            $table->string('tahun_ajaran');
+            $table->boolean('masuk')->nullable();
+            $table->boolean('ijin')->nullable();
+            $table->boolean('sakit')->nullable();
+            $table->boolean('alpha')->nullable();
+            $table->boolean('alasan')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->string('tahun_ajaran')->nullable();
             $table->timestamps();
         });
     }

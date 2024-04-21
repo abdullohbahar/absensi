@@ -1,0 +1,199 @@
+@extends('guru.layout.app')
+
+@section('title')
+@endsection
+
+@push('addons-css')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('dashboard-assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('dashboard-assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard-assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endpush
+
+@section('content')
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1 class="m-0"> Presensi Kelas {{ $kelas }} | Tanggal : <?= date('d-m-Y') ?></h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-bordered table-striped" id="table1">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Nama Siswa</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($siswa as $siswa)
+                                                    <tr>
+                                                        <td>{{ $siswa->nomor_absensi }}</td>
+                                                        <td>{{ $siswa->nama_siswa }}</td>
+                                                        <td>
+                                                            @if (!$siswa->hasOneAbsensi)
+                                                                Belum Presensi
+                                                            @else
+                                                                Sudah Presensi
+                                                                @if ($siswa->hasOneAbsensi->masuk)
+                                                                    <b>Masuk</b>
+                                                                @elseif ($siswa->hasOneAbsensi->ijin)
+                                                                    <b>Izin</b>
+                                                                @elseif($siswa->hasOneAbsensi->sakit)
+                                                                    <b>Sakit</b>
+                                                                @elseif($siswa->hasOneAbsensi->alpha)
+                                                                    <b>Alpha</b>
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if (!$siswa->hasOneAbsensi)
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 col-md-6 col-lg-3 mt-2">
+                                                                        <a href="javascript:void(0)"
+                                                                            data-id="{{ $siswa->id }}"
+                                                                            data-namasiswa="{{ $siswa->nama_siswa }}"
+                                                                            data-keterangan="masuk" class="btn btn-success"
+                                                                            id="btnAbsensi" style="width:100%">Masuk</a>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-md-6 col-lg-3 mt-2">
+                                                                        <a href="javascript:void(0)"
+                                                                            data-id="{{ $siswa->id }}"
+                                                                            data-namasiswa="{{ $siswa->nama_siswa }}"
+                                                                            data-keterangan="ijin" id="btnAbsensi"
+                                                                            class="btn btn-info" style="width:100%">Izin</a>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-md-6 col-lg-3 mt-2">
+                                                                        <a href="javascript:void(0)"
+                                                                            data-id="{{ $siswa->id }}"
+                                                                            data-namasiswa="{{ $siswa->nama_siswa }}"
+                                                                            data-keterangan="sakit" class="btn btn-warning"
+                                                                            id="btnAbsensi" style="width:100%">Sakit</a>
+                                                                    </div>
+                                                                    <div class="col-sm-12 col-md-6 col-lg-3 mt-2">
+                                                                        <a href="javascript:void(0)"
+                                                                            data-id="{{ $siswa->id }}"
+                                                                            data-namasiswa="{{ $siswa->nama_siswa }}"
+                                                                            data-keterangan="alpha" class="btn btn-danger"
+                                                                            id="btnAbsensi" style="width:100%">Alpha</a>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <button class="btn btn-secondary btn-sm"
+                                                                    style="width: 100%">Ubah</button>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+@endsection
+
+@push('addons-js')
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('dashboard-assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+    <script>
+        $("#table1").DataTable({
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+        });
+
+        var token = $('meta[name="csrf-token"]').attr('content');
+
+
+        // destroy anak asuh
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': token
+            }
+        });
+
+        $("body").on("click", "#btnAbsensi", function() {
+            var id = $(this).data("id");
+            var keterangan = $(this).data("keterangan");
+            var namaSiswa = $(this).data("namasiswa");
+
+            Swal.fire({
+                text: `Apakah anda yakin bahwa ${namaSiswa} ${keterangan} ?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya!',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/absensi/' + id + '/' + keterangan,
+                        type: 'POST',
+                        success: function(response) {
+                            if (response.code == 200) {
+                                Swal.fire(
+                                    'Berhasil!',
+                                    response.message,
+                                    'success'
+                                ).then(() => {
+                                    location
+                                        .reload(); // Refresh halaman setelah mengklik OK
+                                });
+                            } else if (response.code == 500) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: response.message,
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+@endpush
