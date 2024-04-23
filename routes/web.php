@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GuruController::class, 'index'])->name('guru.index');
 Route::get('presensi/{kelas}', [GuruController::class, 'presensi'])->name('guru.presensi');
 Route::post('absensi/{idSiswa}/{keterangan}', [GuruController::class, 'absensi'])->name('guru.absensi.siswa');
+Route::put('updaet-absensi', [GuruController::class, 'updateAbsensi'])->name('guru.update.absensi.siswa');
 
 Route::get('export', [ExportController::class, 'index'])->name('guru.index.export');
 
