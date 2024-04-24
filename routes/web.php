@@ -43,5 +43,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [SiswaAdminController::class, 'edit'])->name('admin.edit.siswa');
         Route::put('/update/{id}', [SiswaAdminController::class, 'update'])->name('admin.update.siswa');
         Route::delete('/destroy/{id}', [SiswaAdminController::class, 'destroy'])->name('admin.destroy.siswa');
+        Route::post('import', [SiswaAdminController::class, 'import'])->name('admin.import.siswa');
     });
 });
