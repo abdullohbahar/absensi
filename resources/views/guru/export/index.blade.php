@@ -51,7 +51,7 @@
                                                 class="form-control @error('rombel') is-invalid @enderror" id="rombel">
                                                 <option value="">-- Pilih Rombel --</option>
                                                 <option value="all">Semua Rombel</option>
-                                                @foreach (range('A', 'H') as $rombel)
+                                                @foreach (range('A', 'F') as $rombel)
                                                     <option {{ old('rombel') == $rombel ? 'selected' : '' }}
                                                         value="{{ $rombel }}">{{ $rombel }}</option>
                                                 @endforeach

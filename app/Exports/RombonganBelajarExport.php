@@ -7,8 +7,9 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class RombonganBelajarExport implements FromView, WithColumnWidths
+class RombonganBelajarExport implements FromView, WithColumnWidths, WithTitle
 {
     protected $date, $kelas;
 
@@ -32,7 +33,8 @@ class RombonganBelajarExport implements FromView, WithColumnWidths
             ->get();
 
         $data = [
-            'siswa' => $siswa
+            'siswa' => $siswa,
+            'kelas' => $kelas
         ];
 
         return view('guru.export.export-rombel', $data);
@@ -45,5 +47,10 @@ class RombonganBelajarExport implements FromView, WithColumnWidths
             'B' => 50,
             'C' => 50,
         ];
+    }
+
+    public function title(): string
+    {
+        return $this->kelas;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guru;
 
+use App\Exports\MultipleRombonganBelajarExport;
 use App\Exports\RombonganBelajarExport;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -22,13 +23,16 @@ class ExportController extends Controller
 
     public function export(Request $request)
     {
+        $kelas = $request->kelas . $request->rombel;
+        $date = $request->tanggal;
+        $angkaKelas = $request->kelas;
+
+        $formattedDate = Carbon::parse($date)->format('d-m-Y');
+
         if ($request->rombel != 'all') {
-            $kelas = $request->kelas . $request->rombel;
-            $date = $request->tanggal;
-
-            $formattedDate = Carbon::parse($date)->format('d-m-Y');
-
             return Excel::download(new RombonganBelajarExport($date, $kelas), "Presensi Kelas $kelas Tanggal $formattedDate.xlsx");
+        } else {
+            return Excel::download(new MultipleRombonganBelajarExport($date, $kelas, $angkaKelas), "Presensi Kelas $angkaKelas Tanggal $formattedDate.xlsx");
         }
     }
 }
