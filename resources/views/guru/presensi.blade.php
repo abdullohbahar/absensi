@@ -149,7 +149,7 @@
                             </div>
                             <div class="col-12">
                                 <label for="">Presensi</label>
-                                <select name="keterangan" id="" class="form-control">
+                                <select name="keterangan" id="" class="form-control" required>
                                     <option value="">-- Pilih Presensi --</option>
                                     <option value="masuk">Masuk</option>
                                     <option value="izin">Izin</option>
