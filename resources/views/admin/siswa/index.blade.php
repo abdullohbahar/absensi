@@ -40,6 +40,11 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                <p>Harap menggunakan template yang sudah disediakan</p>
+                                <button data-toggle="modal" data-target="#modalImport" class="btn btn-primary">Import Data
+                                    Siswa</button>
+                                <a href="{{ asset('template/template import siswa.xlsx') }}"
+                                    class="btn btn-warning">Template</a>
                                 <div class="card-tools">
                                     <a href="{{ route('admin.create.siswa') }}" class="btn btn-success">Tambah Siswa</a>
                                 </div>
@@ -88,6 +93,39 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalImportLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.import.siswa') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="">Pilih File</label>
+                                <input type="file" name="file" class="form-control" accept=".xlsx" id="">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <button class="btn btn-success" style="width: 100%">Import</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

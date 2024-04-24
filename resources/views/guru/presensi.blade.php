@@ -55,13 +55,13 @@
                                                             @else
                                                                 Sudah Presensi
                                                                 @if ($siswa->hasOneAbsensi->masuk)
-                                                                    <b>Masuk</b>
+                                                                    <b class="keterangan">Masuk</b>
                                                                 @elseif ($siswa->hasOneAbsensi->ijin)
-                                                                    <b>Izin</b>
+                                                                    <b class="keterangan">Izin</b>
                                                                 @elseif($siswa->hasOneAbsensi->sakit)
-                                                                    <b>Sakit</b>
+                                                                    <b class="keterangan">Sakit</b>
                                                                 @elseif($siswa->hasOneAbsensi->alpha)
-                                                                    <b>Alpha</b>
+                                                                    <b class="keterangan">Alpha</b>
                                                                 @endif
                                                             @endif
                                                         </td>
@@ -98,8 +98,18 @@
                                                                     </div>
                                                                 </div>
                                                             @else
-                                                                <button class="btn btn-secondary btn-sm"
-                                                                    style="width: 100%">Ubah</button>
+                                                                <button class="btn btn-secondary btn-sm" id="btnChange"
+                                                                    data-id="{{ $siswa->hasOneAbsensi->id }}"
+                                                                    data-namasiswa="{{ $siswa->nama_siswa }}"
+                                                                    style="width: 100%"
+                                                                    @if ($siswa->hasOneAbsensi->masuk) data-keterangan="Masuk"
+                                                                @elseif ($siswa->hasOneAbsensi->ijin)
+                                                                    data-keterangan="Izin"
+                                                                @elseif($siswa->hasOneAbsensi->sakit)
+                                                                    data-keterangan="Sakit"
+                                                                @elseif($siswa->hasOneAbsensi->alpha)
+                                                                    data-keterangan="Alpha" @endif>
+                                                                    Ubah</button>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -116,6 +126,48 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalUbah" tabindex="-1" aria-labelledby="modalUbahLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalUbahLabel">Ubah Presensi <span id="namaSiswa"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('guru.update.absensi.siswa') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="absensi_id" id="siswaID">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Presensi : <b id="absensi-sebelumnya"></b></p>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Presensi</label>
+                                <select name="keterangan" id="" class="form-control" required>
+                                    <option value="">-- Pilih Presensi --</option>
+                                    <option value="masuk">Masuk</option>
+                                    <option value="izin">Izin</option>
+                                    <option value="sakit">Sakit</option>
+                                    <option value="alpha">Alpha</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-success" style="width: 100%">Ubah</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -194,6 +246,18 @@
                     })
                 }
             })
+        })
+
+        $("body").on("click", "#btnChange", function() {
+            $("#modalUbah").modal("show")
+
+            var nama = $(this).data("namasiswa")
+            var siswaID = $(this).data("id")
+            var keterangan = $(this).data("keterangan")
+
+            $("#namaSiswa").text(nama)
+            $("#siswaID").val(siswaID)
+            $("#absensi-sebelumnya").text(keterangan)
         })
     </script>
 @endpush

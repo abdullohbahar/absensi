@@ -21,8 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [GuruController::class, 'index'])->name('guru.index');
 Route::get('presensi/{kelas}', [GuruController::class, 'presensi'])->name('guru.presensi');
 Route::post('absensi/{idSiswa}/{keterangan}', [GuruController::class, 'absensi'])->name('guru.absensi.siswa');
+Route::put('update-absensi', [GuruController::class, 'updateAbsensi'])->name('guru.update.absensi.siswa');
 
 Route::get('export', [ExportController::class, 'index'])->name('guru.index.export');
+Route::post('action-export', [ExportController::class, 'export'])->name('guru.action.export');
 
 Route::prefix('admin')->group(function () {
     Route::get('dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
@@ -41,5 +43,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', [SiswaAdminController::class, 'edit'])->name('admin.edit.siswa');
         Route::put('/update/{id}', [SiswaAdminController::class, 'update'])->name('admin.update.siswa');
         Route::delete('/destroy/{id}', [SiswaAdminController::class, 'destroy'])->name('admin.destroy.siswa');
+        Route::post('import', [SiswaAdminController::class, 'import'])->name('admin.import.siswa');
     });
 });

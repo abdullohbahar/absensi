@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\SiswaImport;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 
 class SiswaAdminController extends Controller
 {
@@ -108,5 +111,18 @@ class SiswaAdminController extends Controller
                 'error' => $e->getMessage()
             ]);
         }
+    }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+
+        Excel::import(new SiswaImport, $file);
+
+        return redirect()->back()->with('success', 'Berhasil Import Data Siswa');
     }
 }

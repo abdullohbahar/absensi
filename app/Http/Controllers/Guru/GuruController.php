@@ -76,4 +76,23 @@ class GuruController extends Controller
             ]);
         }
     }
+
+    public function updateAbsensi(Request $request)
+    {
+        $absensi = Absensi::findorfail($request->absensi_id);
+
+        if ($request->keterangan == 'masuk') {
+            $absensi->masuk = true;
+        } else if ($request->keterangan == 'ijin') {
+            $absensi->ijin = true;
+        } else if ($request->keterangan == 'sakit') {
+            $absensi->sakit = true;
+        } else if ($request->keterangan == 'alpha') {
+            $absensi->alpha = true;
+        }
+
+        $absensi->save();
+
+        return redirect()->back()->with('success', 'Berhasil Diubah');
+    }
 }
