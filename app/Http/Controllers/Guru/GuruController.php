@@ -24,6 +24,20 @@ class GuruController extends Controller
     {
         $dateNow = date('Y-m-d');
 
+        $absensi = Absensi::where('tanggal', $dateNow)->exists();
+
+        $siswa = Siswa::get();
+
+        if ($absensi == false) {
+            foreach ($siswa as $sis) {
+                Absensi::create([
+                    'siswa_id' => $sis->id,
+                    'masuk' => true,
+                    'tanggal' => $dateNow
+                ]);
+            }
+        }
+
         $siswa = Siswa::with([
             'hasOneAbsensi' => function ($query) use ($dateNow) {
                 $query->where('tanggal', $dateNow);
@@ -31,6 +45,7 @@ class GuruController extends Controller
         ])->where('kelas', $kelas)
             ->orderBy('nomor_absensi', 'asc')
             ->get();
+
 
         $data = [
             'siswa' => $siswa,
@@ -83,11 +98,23 @@ class GuruController extends Controller
 
         if ($request->keterangan == 'masuk') {
             $absensi->masuk = true;
+            $absensi->ijin = false;
+            $absensi->sakit = false;
+            $absensi->alpha = false;
         } else if ($request->keterangan == 'ijin') {
+            $absensi->masuk = false;
             $absensi->ijin = true;
+            $absensi->sakit = false;
+            $absensi->alpha = false;
         } else if ($request->keterangan == 'sakit') {
+            $absensi->masuk = false;
+            $absensi->ijin = false;
             $absensi->sakit = true;
+            $absensi->alpha = false;
         } else if ($request->keterangan == 'alpha') {
+            $absensi->masuk = false;
+            $absensi->ijin = false;
+            $absensi->sakit = false;
             $absensi->alpha = true;
         }
 
