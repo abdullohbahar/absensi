@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class KelasAdminController extends Controller
@@ -60,6 +61,14 @@ class KelasAdminController extends Controller
         try {
             $kelas = Kelas::findOrFail($id);
 
+            // Temukan semua siswa yang memiliki kelas ID yang sama dengan ID kelas yang akan dihapus
+            $siswaToDelete = Siswa::where('kelas', $kelas->kelas)->get();
+
+            // Hapus semua siswa yang terkait dengan kelas ini
+            foreach ($siswaToDelete as $siswa) {
+                $siswa->delete();
+            }
+
             $kelas->delete();
 
             return response()->json([
@@ -69,7 +78,7 @@ class KelasAdminController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Gagal Menghapus Data',
+                'message' => 'Gagal Menghapus Data' . $e->getMessage(),
                 'code' => 500,
                 'error' => $e->getMessage()
             ]);
