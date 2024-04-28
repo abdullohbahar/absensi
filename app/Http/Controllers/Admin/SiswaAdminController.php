@@ -14,7 +14,7 @@ class SiswaAdminController extends Controller
 {
     public function index()
     {
-        $siswa = Siswa::orderBy('nama_siswa', 'asc')->get();
+        $siswa = Siswa::orderBy('kelas', 'asc')->orderBy('nomor_absensi', 'asc')->get();
 
         $data = [
             'active' => 'siswa',

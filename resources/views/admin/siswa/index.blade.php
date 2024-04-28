@@ -67,7 +67,7 @@
                                                 @endphp
                                                 @foreach ($siswa as $siswa)
                                                     <tr>
-                                                        <td>{{ $no++ }}</td>
+                                                        <td>{{ $siswa->nomor_absensi }}</td>
                                                         <td>{{ $siswa->nama_siswa }}</td>
                                                         <td>{{ $siswa->kelas }}</td>
                                                         <td>

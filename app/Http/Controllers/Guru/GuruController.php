@@ -94,31 +94,39 @@ class GuruController extends Controller
 
     public function updateAbsensi(Request $request)
     {
-        $absensi = Absensi::findorfail($request->absensi_id);
+        $absensi = Absensi::findOrFail($request->absensi_id);
 
-        if ($request->keterangan == 'masuk') {
-            $absensi->masuk = true;
-            $absensi->ijin = false;
-            $absensi->sakit = false;
-            $absensi->alpha = false;
-        } else if ($request->keterangan == 'ijin') {
-            $absensi->masuk = false;
-            $absensi->ijin = true;
-            $absensi->sakit = false;
-            $absensi->alpha = false;
-        } else if ($request->keterangan == 'sakit') {
-            $absensi->masuk = false;
-            $absensi->ijin = false;
-            $absensi->sakit = true;
-            $absensi->alpha = false;
-        } else if ($request->keterangan == 'alpha') {
-            $absensi->masuk = false;
-            $absensi->ijin = false;
-            $absensi->sakit = false;
-            $absensi->alpha = true;
+        $keterangan = $request->keterangan;
+
+        // Inisialisasi default values
+        $attributes = [
+            'masuk' => false,
+            'ijin' => false,
+            'sakit' => false,
+            'alpha' => false,
+        ];
+
+        // Mapping nilai atribut berdasarkan nilai keterangan
+        switch ($keterangan) {
+            case 'masuk':
+                $attributes['masuk'] = true;
+                break;
+            case 'ijin':
+                $attributes['ijin'] = true;
+                break;
+            case 'sakit':
+                $attributes['sakit'] = true;
+                break;
+            case 'alpha':
+                $attributes['alpha'] = true;
+                break;
+            default:
+                // Default action jika keterangan tidak sesuai
+                break;
         }
 
-        $absensi->save();
+        // Update atribut-absensi sesuai dengan nilai yang telah dipetakan
+        $absensi->update($attributes);
 
         return redirect()->back()->with('success', 'Berhasil Diubah');
     }
