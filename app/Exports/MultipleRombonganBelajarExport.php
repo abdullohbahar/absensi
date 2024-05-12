@@ -7,11 +7,12 @@ use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
 class MultipleRombonganBelajarExport implements WithMultipleSheets
 {
-    protected $date, $kelas, $angkaKelas;
+    protected $start_date, $end_date, $kelas, $angkaKelas;
 
-    public function __construct($date, $kelas, $angkaKelas)
+    public function __construct($start_date, $end_date, $kelas, $angkaKelas)
     {
-        $this->date = $date;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
         $this->kelas = $kelas;
         $this->angkaKelas = $angkaKelas;
     }
@@ -22,7 +23,7 @@ class MultipleRombonganBelajarExport implements WithMultipleSheets
 
         foreach (range('A', 'F') as $rombel) {
             $kelas = $this->angkaKelas . $rombel;
-            $sheets[] = new RombonganBelajarExport($this->date, $kelas);
+            $sheets[] = new RombonganBelajarExport($this->start_date, $this->end_date, $kelas);
         }
 
         return $sheets;

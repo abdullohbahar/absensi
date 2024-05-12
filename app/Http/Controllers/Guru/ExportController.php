@@ -24,15 +24,17 @@ class ExportController extends Controller
     public function export(Request $request)
     {
         $kelas = $request->kelas . $request->rombel;
-        $date = $request->tanggal;
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
         $angkaKelas = $request->kelas;
 
-        $formattedDate = Carbon::parse($date)->format('d-m-Y');
+        $date1 = Carbon::parse($start_date)->format('d-m-Y');
+        $date2 = Carbon::parse($end_date)->format('d-m-Y');
 
         if ($request->rombel != 'all') {
-            return Excel::download(new RombonganBelajarExport($date, $kelas), "Presensi Kelas $kelas Tanggal $formattedDate.xlsx");
+            return Excel::download(new RombonganBelajarExport($start_date, $end_date, $kelas), "Presensi Kelas $kelas Tanggal $date1 - $date2.xlsx");
         } else {
-            return Excel::download(new MultipleRombonganBelajarExport($date, $kelas, $angkaKelas), "Presensi Kelas $angkaKelas Tanggal $formattedDate.xlsx");
+            return Excel::download(new MultipleRombonganBelajarExport($start_date, $end_date, $kelas, $angkaKelas), "Presensi Kelas $angkaKelas Tanggal $date1 - $date2.xlsx");
         }
     }
 }

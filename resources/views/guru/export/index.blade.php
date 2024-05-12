@@ -63,8 +63,12 @@
                                             @enderror
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg-3">
-                                            <label for="">Tanggal</label>
-                                            <input type="date" name="tanggal" class="form-control" id="">
+                                            <label for="">Dari Tanggal</label>
+                                            <input type="date" name="start_date" class="form-control" id="">
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-3">
+                                            <label for="">Sampai Tanggal</label>
+                                            <input type="date" name="end_date" class="form-control" id="">
                                         </div>
                                         <div class="col-sm-12 col-md-12 col-lg-3">
                                             <label for="" style="color: white">export</label>
