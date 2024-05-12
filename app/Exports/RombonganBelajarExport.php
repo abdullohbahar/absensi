@@ -11,25 +11,28 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class RombonganBelajarExport implements FromView, WithColumnWidths, WithTitle
 {
-    protected $date, $kelas;
+    protected $start_date, $end_date, $kelas;
 
-    public function __construct($date, $kelas)
+    public function __construct($start_date, $end_date, $kelas)
     {
-        $this->date = $date;
+        $this->start_date = $start_date;
+        $this->end_date = $end_date;
         $this->kelas = $kelas;
     }
 
     public function view(): View
     {
         $kelas = $this->kelas;
-        $date = $this->date;
+        $start_date = $this->start_date;
+        $end_date = $this->end_date;
 
         $siswa = Siswa::with([
-            'hasOneAbsensi' => function ($query) use ($date) {
-                $query->where('tanggal', $date);
+            'hasOneAbsensi' => function ($query) use ($start_date, $end_date) {
+                $query->whereBetween('tanggal', [$start_date, $end_date]);
             }
         ])->where('kelas', $kelas)
             ->orderBy('nomor_absensi', 'asc')
+            ->orderBy('kelas', 'asc')
             ->get();
 
         $data = [

@@ -14,6 +14,8 @@
             <td>No</td>
             <td>Nama Siswa</td>
             <td>Keterangan</td>
+            <td>Kelas</td>
+            <td>Tanggal</td>
         </tr>
         @foreach ($siswa as $siswa)
             <tr>
@@ -33,6 +35,12 @@
                             Alpha
                         @endif
                     @endif
+                </td>
+                <td>
+                    {{ $siswa->kelas }}
+                </td>
+                <td>
+                    {{ \Carbon\Carbon::parse($siswa->hasOneAbsensi->tanggal)->format('d-m-Y') }}
                 </td>
             </tr>
         @endforeach
